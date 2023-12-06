@@ -73,10 +73,9 @@ def device_create1(request):
 @csrf_exempt
 def device_create(request):
     if request.method == 'POST':
-        print(request.POST)
         form = DeviceForm(request.POST)
-        print(form.cleaned_data)
         if form.is_valid():
+            print('valid')
             device = form.save()
             return JsonResponse({'status': 'success', 'device_id': device.id})
         else:
