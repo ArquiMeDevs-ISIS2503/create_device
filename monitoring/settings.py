@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import requests
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,16 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'measurements',
-    'devices',
     'variables',
-    'sites',
-    'medicines',
-    'diagnostics',
-    'symptoms',
-    'vitalSigns',
-    'entrys',
-    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +55,7 @@ ROOT_URLCONF = 'monitoring.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'monitoring', 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,11 +77,11 @@ WSGI_APPLICATION = 'monitoring.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'rasi-db',
-        'USER': 'rasi-user',
+        'NAME': 'variables_db',
+        'USER': 'variables_user',
         'PASSWORD': 'isis2503',
-        'HOST': '10.16.32.13',
-        'PORT': '',
+        'HOST': '0.0.0.0',
+        'PORT': '5432',
     }
 }
 
@@ -135,34 +125,10 @@ USE_TZ = True
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'static', 'media')
-#MEDIA_URL = '/static/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = '/media/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
-
-EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'arquisoft2019@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxxxxxxxx'
-
-
-metadata_url = 'http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip'
-metadata_headers = {'Metadata-Flavor': 'Google'}
-
-resp = requests.get(metadata_url, headers=metadata_headers)
-public_ip = resp.text
-
-LOGIN_URL = "/login/auth0" 
-LOGIN_REDIRECT_URL = "/" 
-LOGOUT_REDIRECT_URL = "https://isis2503-arquimedevs.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F" + public_ip + ":8080"
-SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes 
-SOCIAL_AUTH_AUTH0_DOMAIN = 'isis2503-arquimedevs.us.auth0.com' 
-SOCIAL_AUTH_AUTH0_KEY = 'zNThpMiejE023o072vOVRf6wDFpaqMnU' 
-SOCIAL_AUTH_AUTH0_SECRET = 'HlPAwWdxSkemzmvx613_69MHkxbJs_vOCwf3DgpB-IiVQAI2YYRwdLtKS9ydBCkq' 
-SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid', 'profile','email','role', ] 
-AUTHENTICATION_BACKENDS = { 'monitoring.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
