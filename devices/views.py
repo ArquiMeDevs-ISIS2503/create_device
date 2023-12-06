@@ -75,10 +75,12 @@ def device_create(request):
     if request.method == 'POST':
         print(request.POST)
         form = DeviceForm(request.POST)
+        print(form.cleaned_data)
         if form.is_valid():
             device = form.save()
             return JsonResponse({'status': 'success', 'device_id': device.id})
         else:
+            print('invalid')
             return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
     else:
         return JsonResponse({'status': 'error', 'message': 'Only POST requests are allowed.'}, status=405)
