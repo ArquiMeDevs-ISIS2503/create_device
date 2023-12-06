@@ -18,12 +18,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', views.index),
-    #path('', include(('devices.urls','devices'), namespace='devices')),
-    #path('', include(('sites.urls','sites'), namespace='sites')),
-    path('', include(('devices.urls','create_device'), namespace='create_device')),
-    #path('health-check/', views.healthCheck),
-    #path(r'', include('django.contrib.auth.urls')),
-    #path(r'', include('social_django.urls')),
-    
+    path('', include(('devices.urls','create_device'), namespace='create_device')),    
 ]
