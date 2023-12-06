@@ -3,11 +3,15 @@ from .forms import DeviceForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .logic.logic_device import create_device, get_devices, get_deviceSede
 from sites.logic.site_logic import get_site_by_name
 import requests
 import datetime
 import json
+
+
 
 def json_default(value):
     if isinstance(value, datetime.date):
@@ -47,7 +51,7 @@ def getSede(request):
     }
     return render(request, 'Device/devices.html', context)
 
-def device_create(request):
+def device_create1(request):
     if request.method == 'POST':
         form = DeviceForm(request.POST)
         if form.is_valid():
@@ -64,3 +68,15 @@ def device_create(request):
     }
 
     return render(request, 'Device/deviceCreate.html', context)
+
+@csrf_exempt
+def device_create(request):
+    if request.method == 'POST':
+        form = DeviceForm(request.POST)
+        if form.is_valid():
+            device = form.save()
+            return JsonResponse({'status': 'success', 'device_id': device.id})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Only POST requests are allowed.'}, status=405)
