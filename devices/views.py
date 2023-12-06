@@ -74,6 +74,7 @@ def device_create1(request):
 def device_create(request):
     if request.method == 'POST':
         form = DeviceForm(request.POST)
+        print('form: ', form)
         if form.is_valid():
             print('valid')
             device = form.save()
