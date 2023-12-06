@@ -77,8 +77,9 @@ def device_create(request):
         print('form: ', form)
         if form.is_valid():
             print('valid')
-            device = form.save()
-            return JsonResponse({'status': 'success', 'device_id': device.id})
+            create_device(form)
+            messages.add_message(request, messages.SUCCESS, 'Device create successful')
+            return JsonResponse({'status': 'success'})
         else:
             print('invalid')
             return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
