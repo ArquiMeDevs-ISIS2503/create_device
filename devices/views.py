@@ -63,4 +63,16 @@ def device_create(request):
         'form': form,
     }
 
-    return render(request, 'Device/deviceCreate.html', context)
+    return ,
+
+def device_create1(request):
+    if request.method == 'POST':
+        data = request.body.decode('utf-8')
+        data_json = json.loads(data)
+        if check_site_name(data_json):
+            site = Site()
+            site.name = data_json['name']
+            site.save()
+            return HttpResponse("Site created successfully")
+        else:
+            return HttpResponse("Site name already exists")
