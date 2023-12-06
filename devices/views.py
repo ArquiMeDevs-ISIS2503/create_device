@@ -69,9 +69,11 @@ def device_create1(request):
 
     return render(request, 'Device/deviceCreate.html', context)
 
+# MICROSERVICIO
 @csrf_exempt
 def device_create(request):
     if request.method == 'POST':
+        print(request.POST)
         form = DeviceForm(request.POST)
         if form.is_valid():
             device = form.save()
