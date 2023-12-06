@@ -12,8 +12,6 @@ class DeviceForm(forms.ModelForm):
             'name',
             'amount',
             'type'
-            #'dateMaintainance',
-            #'dateTime',
         ]
 
         labels = {
@@ -24,5 +22,4 @@ class DeviceForm(forms.ModelForm):
             'name' : 'Name',
             'amount' : 'Amount',
             'type' : 'Type'
-            #'dateTime' : 'Date Time',
         }
